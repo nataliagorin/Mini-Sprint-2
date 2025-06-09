@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  api:
+    build: .
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=hotels_db
+      - DB_USER=postgres
+      - DB_PASSWORD=1234
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_DB: hotels_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql/hotels_db/regions.csv:/regions.csv
+      - ./sql/hotels_db/cities.csv:/cities.csv
+      - ./sql/hotels_db/hotels.csv:/hotels.csv
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  pgdata:
+  pgadmin-data:

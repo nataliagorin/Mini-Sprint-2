@@ -1,5 +1,5 @@
-CREATE TABLE Cities (
-    CityID INTEGER PRIMARY KEY,
-    CityName VARCHAR(100),
-    Country VARCHAR(100)
+CREATE TABLE "cities" (
+    "CityID" INTEGER PRIMARY KEY,
+    "CityName" VARCHAR(100) NOT NULL,
+    "Country" VARCHAR(100) NOT NULL
 );
